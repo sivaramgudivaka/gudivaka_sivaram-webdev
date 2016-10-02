@@ -8,14 +8,14 @@
     <link href="css/style.css" rel="stylesheet"/>
 </head>
 <body>
-
+<div class="no-overflow">
 <nav class="navbar navbar-default navbar-fixed-top">
 	<div class="container-fluid">
-		<a class="navbar-text pull-left" href="#">
+		<a class="navbar-text pull-left" href="widget-list.html">
 			<span class="glyphicon glyphicon-chevron-left white"></span>
 		</a>
 		<a class="navbar-brand">Widget Edit</a>
-		<a class="navbar-text pull-right" href="#">
+		<a class="navbar-text pull-right" href="widget-list.html">
 			<span class="glyphicon glyphicon-ok white"></span>
 		</a>
 	</div>
@@ -35,7 +35,7 @@
 				<input type="text" class="form-control" id="text" placeholder="Text">
 			</div>
 			<div class="form-group">
-				<label for="Size">Url</label>
+				<label for="Size">URL</label>
 				<input type="text" class="form-control" id="url" placeholder="url">
 			</div>
 			<div class="form-group">
@@ -44,21 +44,21 @@
 			</div>
 			<div class="form-group">
 				<label for="InputFile">Upload</label>
-				<input type="file" id="InputFile">
+				<input type="file" class="form-control" id="InputFile" data-bfi-disabled>
 			</div>
-			 <a class="btn btn-primary btn-block" href="#">Upload Image</a>
-			<a class="btn btn-danger  btn-block" href="#">Delete</a>
+			<a class="btn btn-primary btn-block" href="#">Upload Image</a>
+			<a class="btn btn-danger  btn-block" href="widget-list.html">Delete</a>
 		</form>
 	</div>
 </div>
 
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fluid">
-		<a class="navbar-text pull-right" href="#">
+		<a class="navbar-text pull-right" href="profile.html">
 			<span class="glyphicon glyphicon-user white"></span>
         </a>
     </div>
 </nav>
-
+</div>
 </body>
 </html>

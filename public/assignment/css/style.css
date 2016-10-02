@@ -7,8 +7,12 @@ input.form-control {
 }
 
 body {
-	overflow: hidden;
 	padding-top: 60px;
+	margin-bottom:60px;
+}
+
+.no-overflow{
+	overflow: hidden;
 }
 
 .navbar{
@@ -53,4 +57,24 @@ vr {
 .nav-left-xs{
 	padding-left:6px;
 	padding-right:10px;
+}
+
+.relative-position {
+    position: relative;
+}
+.absolute-position {
+    position: absolute;
+}
+.list-element-menu {
+    top: 0px;
+    right: 0px;
+    z-index: 10;
+    background-color: white;
+}
+.no-top-margin{
+	margin-top:0px;	
+}
+a:hover{
+	text-decoration: none;
+	color: #337ab7;
 }

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <title>Title</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="css/style.css" rel="stylesheet"/>
@@ -9,19 +10,19 @@
 <body>
 
 <nav class="navbar navbar-default navbar-fixed-top">
-	<div class="navbar-header">
+	<div class=" container-fluid">
 		<a class="navbar-brand">Profile</a>
 		<a class="navbar-text pull-right" href="#">
-			<span class="glyphicon glyphicon-ok"></span>
+			<span class="glyphicon glyphicon-ok white"></span>
 		</a>
 	</div>
 </nav>
 
 
-<div class="container">
-    <h1></h1>
+<div class="container-fluid">
+    
 
-    <form>
+    <form role="form">
         <div class="form-group">
             <label for="username">Username</label>
             <input type="text" class="form-control" id="username" placeholder="Username">
@@ -38,18 +39,17 @@
             <label for="last-name">Last Name</label>
             <input type="text" class="form-control" id="last-name" placeholder="Wonderland">
         </div>
-    </form>
 
-    <a class="btn btn-primary btn-block"
-       href="website-list.html">Websites</a>
-    <a class="btn btn-danger btn-block"
-       href="login.html">Logout</a>
+    <a class="btn btn-primary btn-block" href="website-list.html">Websites</a>
+    <a class="btn btn-danger btn-block"  href="login.html">Logout</a>
+    </form>
+	   
 </div>
 
 <nav class="navbar navbar-default navbar-fixed-bottom">
-    <div class="navbar-header">
+    <div class="container-fluid">
 		<a class="navbar-text pull-right" href="#">
-			<span class="glyphicon glyphicon-user"></span>
+			<span class="glyphicon glyphicon-user white"></span>
         </a>
     </div>
 </nav>
