@@ -2,6 +2,55 @@ input.form-control {
     margin-bottom: 5px;
 }
 
+.navbar-header {
+    width:100%;
+}
+
 body {
-    padding-top: 36px;
+	overflow: hidden;
+	padding-top: 60px;
+}
+
+.navbar{
+    background-color: #337ab7;
+}
+
+.glyphicon.white{
+    color: #fff;
+}
+
+.navbar-default .navbar-brand,
+.navbar-default .navbar-brand:hover {
+    color: #fff;
+}
+
+.list-item{
+	padding : 6px;
+	font-weight: 600;
+}
+
+vr {
+    width:1px;
+    background-color: darkgray;
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:33%;
+}
+
+.no-padding{
+	padding: 0px;
+}
+.no-padding-right{
+	padding-right:0px;	
+}
+
+.nav-left-full{
+	padding-left:0px;
+	padding-right:5px;
+}
+
+.nav-left-xs{
+	padding-left:6px;
+	padding-right:10px;
 }
