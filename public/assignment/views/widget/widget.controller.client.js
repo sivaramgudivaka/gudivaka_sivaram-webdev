@@ -55,6 +55,7 @@
         vm.createWidget = createWidget;
         function createWidget(widget){
             widget.widgetType = vm.type;
+            widget.width += '%';
             WidgetService.createWidget(pageId, widget);
             $location.url("/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget");
         }
