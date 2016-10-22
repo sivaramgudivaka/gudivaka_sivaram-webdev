@@ -8,14 +8,14 @@
 
     function WidgetService() {
         var widgets = [
-            { "_id": 123, "widgetType": "heading", "pageId": 321, "size": 2, "text": "GIZMODO"},
-            { "_id": 234, "widgetType": "heading", "pageId": 321, "size": 4, "text": "Lorem ipsum"},
-            { "_id": 345, "widgetType": "image", "pageId": 321, "width": "100%", "url": "http://lorempixel.com/400/200/"},
-            { "_id": 567, "widgetType": "heading", "pageId": 321, "size": 4, "text": "Lorem ipsum"},
-            { "_id": 678, "widgetType": "youtube", "pageId": 321, "name":"y1", "text":"dasf", "width": "100%", "url": "https://youtu.be/AM2Ivdi9c4E"},
-            { "_id": 790, "widgetType": "youtube", "pageId": 544, "name":"y1", "text":"dasf", "width": "100%", "url": "https://youtu.be/AM2Ivdi9c4E"},
-,           { "_id": 791, "widgetType": "heading", "pageId": 544, "text": "heading", "name":"myheading", "size":10},
-            { "_id": 792, "widgetType": "image", "pageId": 544, "name":"imm", "text":"img", "width": "100%", "url": "http://lorempixel.com/400/200/"}
+            { "_id": 123, "widgetType": "heading", "pageId": 321, "size": "6", "text": "GIZMODO"},
+            { "_id": 234, "widgetType": "heading", "pageId": 321, "size": "6", "text": "Lorem ipsum"},
+            { "_id": 345, "widgetType": "image", "pageId": 321, "width": "50%", "url": "http://lorempixel.com/400/200/"},
+            { "_id": 567, "widgetType": "heading", "pageId": 321, "size": "4", "text": "Lorem ipsum"},
+            { "_id": 678, "widgetType": "youtube", "pageId": 321, "name":"y1", "text":"dasf", "width": "50%", "url": "https://youtu.be/AM2Ivdi9c4E"},
+            { "_id": 790, "widgetType": "youtube", "pageId": 544, "name":"y1", "text":"dasf", "width": "50%", "url": "https://youtu.be/AM2Ivdi9c4E"},
+,           { "_id": 791, "widgetType": "heading", "pageId": 544, "text": "heading", "name":"myheading", "size":"6"},
+            { "_id": 792, "widgetType": "image", "pageId": 544, "name":"imm", "text":"img", "width": "50%", "url": "http://lorempixel.com/400/200/"}
         ];
 
         var api = {

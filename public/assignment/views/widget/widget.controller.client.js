@@ -28,8 +28,12 @@
             if(widget.widgetType == 'image') {
                 return $sce.trustAsResourceUrl(url);
             }
-            url = 'https://www.youtube.com/embed/' + url.substr(url.lastIndexOf('/')+1);
-            return $sce.trustAsResourceUrl(url);
+            var vId = url.indexOf("?v=");
+            if(vId == -1){ //shortened url
+                url = 'https://www.youtube.com/embed/' + url.substr(url.lastIndexOf('/')+1);
+                return $sce.trustAsResourceUrl(url);
+            }
+            return $sce.trustAsResourceUrl('https://www.youtube.com/embed/' + url.substr(vId+3));
         }
 
     }
