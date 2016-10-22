@@ -1,0 +1,54 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="container-fluid">
+		<a class="navbar-text pull-left" href="#/user/{{model.userId}}/website/{{model.websiteId}}/page">
+			<span class="glyphicon glyphicon-chevron-left white"></span>
+		</a>
+		<a class="navbar-brand">Widgets</a>
+		<a class="navbar-text pull-right" href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/new">
+			<span class="glyphicon glyphicon-plus white"></span>
+		</a>
+	</div>
+</nav>
+
+
+<div class="container-fluid">
+    <div ng-repeat="widget in model.widgets" class="list-group">
+        <div class="relative-position">
+            <div class="container-fluid no-padding-right">
+                <div ng-switch="widget.widgetType">
+                    <div ng-switch-when="heading">
+                        <h1 class="no-top-margin">{{widget.text}}</h1>
+                    </div>
+                    <div ng-switch-when="html">
+                        <p>{{widget.text}}</p>
+                    </div>
+                    <div ng-switch-when="image">
+                        <img class="img-responsive" ng-src="{{model.widgetUrl(widget)}}" alt="Sample Image"/>
+                    </div>
+                    <div ng-switch-when="youtube" embed-responsive embed-responsive-4by3>
+                        <iframe class="embed-responsive-item" ng-src="{{model.widgetUrl(widget)}}"></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="absolute-position list-element-menu no-padding-right">
+                <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/{{widget._id}}">
+                    <span class="glyphicon glyphicon-cog"></span></a>
+                <a href="#"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
+            </div>
+	    </div>
+    </div>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+		<a class="navbar-text nav-left-xs pull-left" href="#">
+			<span class="glyphicon glyphicon-play white"></span>
+        </a>
+		<a class="navbar-text pull-left" href="#">
+			<span class="glyphicon glyphicon-eye-open white"></span>
+        </a>
+		<a class="navbar-text pull-right" href="#/user/{{model.userId}}">
+			<span class="glyphicon glyphicon-user white"></span>
+        </a>
+    </div>
+</nav>

@@ -1,0 +1,67 @@
+<div class="no-overflow">
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container-fluid">
+			<a class="navbar-text pull-left" href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget">
+				<span class="glyphicon glyphicon-chevron-left white"></span>
+			</a>
+			<a class="navbar-brand">Widget Edit</a>
+			<a class="navbar-text pull-right" ng-click="model.createWidget(model.widget)">
+				<span class="glyphicon glyphicon-ok white"></span>
+			</a>
+		</div>
+	</nav>
+
+
+<div class="row container-fluid">
+<br>
+	<div class="col-sm-12">
+		<form>
+			<div class="form-group">
+				<label for="Name">Name</label>
+				<input type="text"
+					   ng-model="model.widget.name"
+					   class="form-control"
+					   id="name"
+					   placeholder="Name">
+			</div>
+			<div class="form-group">
+				<label for="Text">Text</label>
+				<input type="text"
+					   ng-model="model.widget.text"
+					   class="form-control"
+					   id="text"
+					   placeholder="Text">
+			</div>
+			<div class="form-group">
+				<label for="url">URL</label>
+				<input type="text"
+					   ng-model="model.widget.url"
+					   class="form-control"
+					   id="url"
+					   placeholder="url">
+			</div>
+			<div class="form-group">
+				<label for="width">Width</label>
+				<input type="text"
+					   ng-model="model.widget.width"
+					   class="form-control"
+					   id="width"
+					   placeholder="Width">
+			</div>
+			<div class="form-group">
+				<label for="InputFile">Upload</label>
+				<input type="file" class="form-control" id="InputFile" data-bfi-disabled>
+			</div>
+			<a class="btn btn-primary btn-block">Upload Image</a>
+		</form>
+	</div>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+		<a class="navbar-text pull-right" href="#/user/{{model.userId}}">
+			<span class="glyphicon glyphicon-user white"></span>
+        </a>
+    </div>
+</nav>
+</div>
