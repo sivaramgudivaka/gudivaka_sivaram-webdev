@@ -75,7 +75,7 @@
         vm.userId = userId;
         vm.websiteId = websiteId;
         vm.pageId = pageId;
-        vm.widget = WidgetService.findWidgetById(widgetId);
+        vm.widget = angular.copy(WidgetService.findWidgetById(widgetId));
         vm.updateWidget = updateWidget;
         vm.deleteWidget = deleteWidget;
 

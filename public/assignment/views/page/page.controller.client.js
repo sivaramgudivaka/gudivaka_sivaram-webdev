@@ -46,7 +46,7 @@
         vm.updatePage = updatePage;
         vm.deletePage = deletePage;
         vm.pages = PageService.findPagesByWebsiteId(websiteId);
-        vm.page = PageService.findPageById(pageId);
+        vm.page = angular.copy(PageService.findPageById(pageId));
 
         function updatePage(page) {
             PageService.updatePage(pageId, page);

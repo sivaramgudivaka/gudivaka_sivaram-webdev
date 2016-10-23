@@ -39,11 +39,7 @@
         vm.updateWebsite = updateWebsite;
         vm.deleteWebsite = deleteWebsite;
         vm.websites = WebsiteService.findWebsitesByUser(userId);
-
-        function init() {
-            vm.website = WebsiteService.findWebsiteById(websiteId);
-        }
-        init();
+        vm.website = angular.copy(WebsiteService.findWebsiteById(websiteId));
 
         function updateWebsite(website) {
             WebsiteService.updateWebsite(userId, website);
