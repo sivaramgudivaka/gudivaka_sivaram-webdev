@@ -28,6 +28,23 @@ module.exports = function(app) {
     app.get("/api/widget/:widgetId", findWidgetById);
     app.put("/api/widget/:widgetId", updateWidget);
     app.delete("/api/widget/:widgetId", deleteWidget);
+    app.put("/page/:pageId/widget", sortWidgets);
+
+    function sortWidgets(req, res){
+        var pid = parseInt(req.params.pageId);
+        var result = [];
+        for(var wg in widgets) {
+            if(widgets[wg].pageId === pid) {
+                result.push(widgets[wg]);
+            }
+        }
+        var initial = parseInt(req.query.initial);
+        var final = parseInt(req.query.final);
+        var temp = result[initial];
+        result.splice(initial, 1);  //pluck it from the initial pos
+        result.splice(final, 0, temp);  //add to to its new place
+        res.send(result);
+    }
 
     function uploadImage(req, res) {
         var widgetId      = req.body.widgetId;
@@ -53,10 +70,10 @@ module.exports = function(app) {
     }
 
     function findAllWidgetsForPage(req, res) {
-        var wgid = parseInt(req.params.widgetId);
+        var pid = parseInt(req.params.pageId);
         var result = [];
         for(var wg in widgets) {
-            if(widgets[wg].widgetId === wgid) {
+            if(widgets[wg].pageId === pid) {
                 result.push(widgets[wg]);
             }
         }

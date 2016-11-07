@@ -11,8 +11,8 @@
 </nav>
 
 
-<div class="container-fluid">
-    <div ng-repeat="widget in model.widgets" class="list-group sortd">
+<div class="container-fluid" id="sortable">
+    <div ng-repeat="widget in model.widgets" class="list-group" id="{{widget._id}}">
         <div class="relative-position">
             <div class="container-fluid no-padding-right">
                 <div ng-switch="widget.widgetType">

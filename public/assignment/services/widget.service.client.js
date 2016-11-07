@@ -13,9 +13,15 @@
             findWidgetsByPageId : findWidgetsByPageId,
             findWidgetById : findWidgetById,
             updateWidget : updateWidget,
-            deleteWidget : deleteWidget
+            deleteWidget : deleteWidget,
+            sortWidget : sortWidgets
         };
         return api;
+
+        function sortWidgets(pageId, initial, final){
+            var url = "/page/"+pageId+"/widget?initial="+initial+"&final="+final;
+            return $http.put(url);
+        }
 
         function createWidget(pageId, widget) {
             widget.pageId = pageId;

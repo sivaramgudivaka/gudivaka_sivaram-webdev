@@ -21,13 +21,25 @@
         function init() {
             WidgetService.findWidgetsByPageId(pageId)
                 .success(function(widgets){
-                    vm.widgets = $(".sortd")
+                    vm.widgets = widgets;
+                    var initial, final;
+                    $( "#sortable" )
                         .sortable({
-                            axis:'y'
-                            });
+                            axis: 'y',
+                            start: function(event, ui){
+                                initial = ui.item.index();
+                            },
+                            update: function (event, ui) {
+                                final = ui.item.index();
+                                WidgetService.sortWidget(pageId, initial, final)
+                                    .success(function(widgets){
+                                        vm.widgets = widgets;
+                                    });
+                            }
+                        });
                 })
                 .error(function(err){
-                    console.log(msg);
+                    console.log(err);
                 });
         }
         init();
