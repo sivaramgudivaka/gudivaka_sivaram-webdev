@@ -16,7 +16,13 @@
         vm.userId = userId;
 
         function init() {
-            vm.pages = PageService.findPagesByWebsiteId(websiteId);
+            PageService.findPagesByWebsiteId(websiteId)
+                .success(function(pages){
+                    vm.pages = pages;
+                })
+                .error(function(msg){
+                    console.log(msg);
+                })
         }
         init();
     }
@@ -28,11 +34,27 @@
         var websiteId = parseInt($routeParams.wid);
         vm.websiteId = websiteId;
         vm.userId = userId;
-        vm.pages = PageService.findPagesByWebsiteId(websiteId);
+
+        function init() {
+            PageService.findPagesByWebsiteId(websiteId)
+                .success(function(pages){
+                    vm.pages = pages;
+                })
+                .error(function(msg){
+                    console.log(msg);
+                });
+        }
+        init();
 
         function newPage(page) {
-            PageService.createPage(websiteId, page);
-            $location.url("/user/" + userId + "/website/" + websiteId + "/page");
+            PageService.createPage(websiteId, page)
+                .success(function(page){
+                    init();
+                    $location.url("/user/" + userId + "/website/" + websiteId + "/page");
+                })
+                .error(function(msg){
+                    console.log(msg);
+                });
         }
     }
 
@@ -45,17 +67,43 @@
         vm.websiteId = websiteId;
         vm.updatePage = updatePage;
         vm.deletePage = deletePage;
-        vm.pages = PageService.findPagesByWebsiteId(websiteId);
-        vm.page = angular.copy(PageService.findPageById(pageId));
+
+        function init(){
+            PageService.findPagesByWebsiteId(websiteId)
+                .success(function(pages){
+                    vm.pages = pages;
+                })
+                .error(function(msg){
+                    console.log(msg);
+                });
+            PageService.findPageById(pageId)
+                .success(function(page){
+                    vm.page = angular.copy(page);
+                });
+        }
+
+        init();
 
         function updatePage(page) {
-            PageService.updatePage(pageId, page);
-            $location.url("/user/" + userId + "/website/" + websiteId + "/page");
+            PageService.updatePage(page)
+                .success(function(page){
+                    init();
+                    $location.url("/user/" + userId + "/website/" + websiteId + "/page");
+                })
+                .error(function(msg){
+                    console.log("Error updating");
+                });
         }
 
         function deletePage(page){
-            PageService.deletePage(page._id);
-            $location.url("/user/" + userId + "/website/" + websiteId + "/page");
+            PageService.deletePage(page._id)
+                .success(function(page){
+                    init();
+                    $location.url("/user/" + userId + "/website/" + websiteId + "/page");
+                })
+                .error(function(msg){
+                    console.log("Error updating");
+                });
         }
     }
 })();

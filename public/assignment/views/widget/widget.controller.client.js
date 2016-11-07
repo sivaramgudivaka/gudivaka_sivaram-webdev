@@ -19,7 +19,16 @@
         vm.widgetUrl = widgetUrl;
 
         function init() {
-            vm.widgets = WidgetService.findWidgetsByPageId(pageId);
+            WidgetService.findWidgetsByPageId(pageId)
+                .success(function(widgets){
+                    vm.widgets = $(".sortd")
+                        .sortable({
+                            axis:'y'
+                            });
+                })
+                .error(function(err){
+                    console.log(msg);
+                });
         }
         init();
 
@@ -43,21 +52,38 @@
         var userId = parseInt($routeParams.uid);
         var websiteId = parseInt($routeParams.wid);
         var pageId = parseInt($routeParams.pid);
-        var widgetId = parseInt($routeParams.wgid);
+        var widgetId = (new Date()).getTime();
         vm.userId = userId;
         vm.websiteId = websiteId;
         vm.pageId = pageId;
         vm.widgetId = widgetId;
         vm.goToWidget = goToWidget;
         vm.type = $routeParams.type;
-        vm.widgets = WidgetService.findWidgetsByPageId(pageId);
+
+        function init() {
+            WidgetService.findWidgetsByPageId(pageId)
+                .success(function(widgets){
+                    vm.widgets = widgets;
+                })
+                .error(function(err){
+                    console.log(err);
+                });
+        }
+        init();
 
         vm.createWidget = createWidget;
         function createWidget(widget){
             widget.widgetType = vm.type;
             widget.width += '%';
-            WidgetService.createWidget(pageId, widget);
-            $location.url("/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget");
+            widget._id = vm.widgetId;
+            WidgetService.createWidget(pageId, widget)
+                .success(function(widget){
+                    init();
+                    $location.url("/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget");
+                })
+                .error(function(err){
+                    console.log(err);
+                });
         }
 
         function goToWidget(type) {
@@ -75,18 +101,40 @@
         vm.userId = userId;
         vm.websiteId = websiteId;
         vm.pageId = pageId;
-        vm.widget = angular.copy(WidgetService.findWidgetById(widgetId));
+
+        function init() {
+            WidgetService.findWidgetById(widgetId)
+                .success(function (widget) {
+                    vm.widget = angular.copy(widget);
+                })
+                .error(function(msg){
+                    console.log(msg);
+                });
+        }
+        init();
         vm.updateWidget = updateWidget;
         vm.deleteWidget = deleteWidget;
 
         function updateWidget(widget){
-            WidgetService.updateWidget(widget._id, widget);
-            $location.url("/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget");
+            WidgetService.updateWidget(widget)
+                .success(function(widget){
+                    init();
+                    $location.url("/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget");
+                })
+                .error(function(msg){
+                    console.log("Error updating");
+                });
         }
 
         function deleteWidget(widget){
-            WidgetService.deleteWidget(widget._id);
-            $location.url("/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget");
+            WidgetService.deleteWidget(widget._id)
+                .success(function(widget){
+                    init();
+                    $location.url("/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget");
+                })
+                .error(function(msg){
+                    console.log("Error deleting");
+                });
         }
     }
 })();
