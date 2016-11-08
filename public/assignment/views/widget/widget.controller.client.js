@@ -113,6 +113,8 @@
         vm.userId = userId;
         vm.websiteId = websiteId;
         vm.pageId = pageId;
+        vm.widget = {};
+        vm.widget.widgetType = "image";
 
         function init() {
             WidgetService.findWidgetById(widgetId)

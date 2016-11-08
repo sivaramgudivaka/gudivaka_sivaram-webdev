@@ -60,7 +60,16 @@ module.exports = function(app) {
         var destination   = myFile.destination;  // folder where file is saved to
         var size          = myFile.size;
         var mimetype      = myFile.mimetype;
-        res.redirect("/assignment/#/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/" + widgetId);
+        var widget = {};
+        widget._id = parseInt(widgetId);
+        widget.widgetType = "image";
+        widget.pageId = parseInt(pageId);
+        widget.name = req.body.name;
+        widget.text = req.body.text;
+        widget.width = width+'%';
+        widget.url =  "/uploads/" + filename;
+        widgets.push(widget);
+        res.redirect("/assignment/#/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/");
     }
 
     function createWidget(req, res) {
