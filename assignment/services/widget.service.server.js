@@ -31,19 +31,16 @@ module.exports = function(app, model) {
     app.put("/page/:pageId/widget", sortWidgets);
 
     function sortWidgets(req, res){
-        var pid = parseInt(req.params.pageId);
-        var result = [];
-        for(var wg in widgets) {
-            if(widgets[wg].pageId === pid) {
-                result.push(widgets[wg]);
-            }
-        }
+        var pid = req.params.pageId;
         var initial = parseInt(req.query.initial);
         var final = parseInt(req.query.final);
-        var temp = result[initial];
-        result.splice(initial, 1);  //pluck it from the initial pos
-        result.splice(final, 0, temp);  //add to to its new place
-        res.send(result);
+        model
+            .widgetModel
+            .reorderWidget(pid, initial, final)
+            .then(function (widgets) {
+                res.json(widgets);
+            });
+
     }
 
     function uploadImage(req, res) {

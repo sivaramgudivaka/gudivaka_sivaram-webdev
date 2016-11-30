@@ -22,7 +22,21 @@ module.exports = function () {
     }
     
     function reorderWidget(pageId, start, end) {
+        return model
+            .pageModel
+            .findPageById(pageId)
+            .then(function (pageObj) {
+                var temp = pageObj.widgets[start];
+                pageObj.widgets.splice(start, 1);  //pluck it from the initial pos
+                pageObj.widgets.splice(end, 0, temp);  //add to to its new place
+                pageObj.save();
 
+                var res = [];
+                for(var wg in pageObj.widgets){
+                    res.push(findWidgetById(pageObj.widgets[wg]));
+                }
+                return res;
+            });
     }
 
     function findAllWidgetsForPage(pageId) {
