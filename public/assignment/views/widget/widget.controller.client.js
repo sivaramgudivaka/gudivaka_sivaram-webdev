@@ -10,9 +10,9 @@
 
     function WidgetListController($routeParams, WidgetService, $sce) {
         var vm = this;
-        var userId = parseInt($routeParams.uid);
-        var websiteId = parseInt($routeParams.wid);
-        var pageId = parseInt($routeParams.pid);
+        var userId = $routeParams.uid;
+        var websiteId = $routeParams.wid;
+        var pageId = $routeParams.pid;
         vm.userId = userId;
         vm.websiteId = websiteId;
         vm.pageId = pageId;
@@ -46,7 +46,7 @@
 
         function widgetUrl(widget){
             var url = widget.url;
-            if(widget.widgetType == 'image') {
+            if(widget.type == 'IMAGE') {
                 return $sce.trustAsResourceUrl(url);
             }
             var vId = url.indexOf("?v=");
@@ -61,14 +61,12 @@
 
     function NewWidgetController($routeParams, WidgetService, $location) {
         var vm = this;
-        var userId = parseInt($routeParams.uid);
-        var websiteId = parseInt($routeParams.wid);
-        var pageId = parseInt($routeParams.pid);
-        var widgetId = (new Date()).getTime();
+        var userId = $routeParams.uid;
+        var websiteId = $routeParams.wid;
+        var pageId = $routeParams.pid;
         vm.userId = userId;
         vm.websiteId = websiteId;
         vm.pageId = pageId;
-        vm.widgetId = widgetId;
         vm.goToWidget = goToWidget;
         vm.type = $routeParams.type;
 
@@ -85,9 +83,7 @@
 
         vm.createWidget = createWidget;
         function createWidget(widget){
-            widget.widgetType = vm.type;
-            widget.width += '%';
-            widget._id = vm.widgetId;
+            widget.type = vm.type.toUpperCase();
             WidgetService.createWidget(pageId, widget)
                 .success(function(widget){
                     init();
@@ -106,15 +102,15 @@
 
     function EditWidgetController($location, $routeParams, WidgetService) {
         var vm = this;
-        var userId = parseInt($routeParams.uid);
-        var websiteId = parseInt($routeParams.wid);
-        var pageId = parseInt($routeParams.pid);
-        var widgetId = parseInt($routeParams.wgid);
+        var userId = $routeParams.uid;
+        var websiteId = $routeParams.wid;
+        var pageId = $routeParams.pid;
+        var widgetId = $routeParams.wgid;
         vm.userId = userId;
         vm.websiteId = websiteId;
         vm.pageId = pageId;
         vm.widget = {};
-        vm.widget.widgetType = "image";
+        vm.widget.type = "IMAGE";
 
         function init() {
             WidgetService.findWidgetById(widgetId)

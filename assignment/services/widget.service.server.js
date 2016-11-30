@@ -1,4 +1,4 @@
-module.exports = function(app) {
+module.exports = function(app, model) {
     var widgets = [
         { "_id": 123, "widgetType": "heading", "pageId": 321, "size": "6", "text": "GIZMODO"},
         { "_id": 234, "widgetType": "heading", "pageId": 321, "size": "6", "text": "Lorem ipsum"},
@@ -47,7 +47,6 @@ module.exports = function(app) {
     }
 
     function uploadImage(req, res) {
-        var widgetId      = req.body.widgetId;
         var width         = req.body.width;
         var userId        = req.body.userId;
         var websiteId     = req.body.websiteId;
@@ -60,65 +59,83 @@ module.exports = function(app) {
         var destination   = myFile.destination;  // folder where file is saved to
         var size          = myFile.size;
         var mimetype      = myFile.mimetype;
+
+        var reqWidget = {};
+        reqWidget.body = {};
         var widget = {};
-        widget._id = parseInt(widgetId);
-        widget.widgetType = "image";
-        widget.pageId = parseInt(pageId);
+        widget.type = "IMAGE";
+        widget.pageId = pageId;
         widget.name = req.body.name;
         widget.text = req.body.text;
-        widget.width = width+'%';
+        widget.width = parseInt(width);
         widget.url =  "/uploads/" + filename;
-        widgets.push(widget);
+        reqWidget.body = widget;
+        createWidget(reqWidget, null);
         res.redirect("/assignment/#/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/");
     }
 
     function createWidget(req, res) {
         var widget = req.body;
-        widgets.push(widget);
-        res.send(widgets);
+        model.widgetModel
+            .createWidget(res == null?req.body.pageId:req.params.pageId, widget)
+            .then(function(widget){
+               res.json(widget);
+            });
     }
 
     function findAllWidgetsForPage(req, res) {
-        var pid = parseInt(req.params.pageId);
-        var result = [];
-        for(var wg in widgets) {
-            if(widgets[wg].pageId === pid) {
-                result.push(widgets[wg]);
-            }
-        }
-        res.json(result);
+        model.widgetModel
+            .findAllWidgetsForPage(req.params.pageId)
+            .then(function(page){
+                res.json(page.widgets);
+            });
     }
 
     function findWidgetById(req, res){
-        var wgid = parseInt(req.params.widgetId);
-        var wg = widgets.filter(function(widget){
-            return widget._id === wgid;
-        });
-        if(wg.length == 1)
-            res.send(wg[0]);
-        else
-            res.send('0');
+        model
+            .widgetModel
+            .findWidgetById(req.params.widgetId)
+            .then(
+                function (widget) {
+                    if(widget) {
+                        res.send(widget);
+                    } else {
+                        res.send('0');
+                    }
+                },
+                function (error) {
+                    res.sendStatus(400).send(error);
+                }
+            )
     }
 
     function updateWidget(req, res){
         var widget = req.body;
-        var wgid = parseInt(req.params.widgetId);
-        for(var wg in widgets) {
-            if(widgets[wg]._id === wgid) {
-                widgets[wg] = widget;
-            }
-        }
-        res.send(200);
+        model
+            .widgetModel
+            .updateWidget(req.params.widgetId, widget)
+            .then(
+                function (status) {
+                    res.send(200);
+                },
+                function (error) {
+                    res.sendStatus(400).send(error);
+                }
+            );
     }
 
     function deleteWidget(req, res){
-        var wgid = parseInt(req.params.widgetId);
-        for(var wg in widgets) {
-            if(widgets[wg]._id === wgid) {
-                widgets.splice(wg, 1);
-            }
-        }
-        res.send('0');
+        model
+            .widgetModel
+            .deleteWidget(req.params.widgetId)
+            .then(
+                function (status) {
+                    res.send(200);
+                },
+                function (error) {
+                    res.sendStatus(400).send(error);
+                }
+            )
     }
 
 };

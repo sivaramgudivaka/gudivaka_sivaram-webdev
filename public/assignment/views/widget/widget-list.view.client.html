@@ -15,8 +15,8 @@
     <div ng-repeat="widget in model.widgets" class="list-group" id="{{widget._id}}">
         <div class="relative-position">
             <div class="container-fluid no-padding-right">
-                <div ng-switch="widget.widgetType">
-                    <div ng-switch-when="heading">
+                <div ng-switch="widget.type">
+                    <div ng-switch-when="HEADING">
                         <div ng-switch="widget.size">
                             <h1 ng-switch-when="6" class="no-top-margin">{{widget.text}}</h1>
                             <h2 ng-switch-when="5" class="no-top-margin">{{widget.text}}</h2>
@@ -26,14 +26,22 @@
                             <h6 ng-switch-when="1" class="no-top-margin">{{widget.text}}</h6>
                         </div>
                     </div>
-                    <div ng-switch-when="html">
-                        <p>{{widget.text}}</p>
+                    <div ng-switch-when="HTML">
+                        {{widget.name}}
                     </div>
-                    <div ng-switch-when="image">
-                        <img class="img-responsive" width="{{widget.width}}" ng-src="{{model.widgetUrl(widget)}}" alt="Sample Image"/>
+                    <div ng-switch-when="IMAGE">
+                        <img class="img-responsive" width="{{widget.width}}%" ng-src="{{model.widgetUrl(widget)}}" alt="Sample Image"/>
                     </div>
-                    <div ng-switch-when="youtube" embed-responsive>
+                    <div ng-switch-when="YOUTUBE" class="youtube-widget" embed-responsive>
                         <iframe class="embed-responsive-item" width="{{widget.width}}" ng-src="{{model.widgetUrl(widget)}}"></iframe>
+                    </div>
+                    <div ng-switch-when="INPUT">
+                        <div ng-if="widget.formatted" text-angular ng-model="widget.text"></div>
+                        <input ng-if="!widget.formatted && (!widget.rows || widget.rows===1)"
+                               placeholder="{{widget.textInput.placeholder}}" class="form-control" value="{{widget.text}}"/>
+                        <textarea ng-if="!widget.formatted && (widget.rows > 1)"
+                                  rows="{{widget.rows}}" placeholder="{{widget.placeholder}}"
+                                  class="form-control">{{widget.text}}</textarea>
                     </div>
                 </div>
             </div>

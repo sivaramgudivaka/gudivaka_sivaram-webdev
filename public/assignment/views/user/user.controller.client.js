@@ -16,7 +16,7 @@
             var promise = UserService.findUserByCredentials(user.username, user.password);
             promise
                 .success(function(user){
-                    if(user === null) {
+                    if(user == '0') {
                         vm.error = "No such user";
                     } else {
                         vm.user = user;
@@ -40,7 +40,7 @@
                 var ExistingUsr = UserService.findUserByCredentials(user.username, user.password);
                 ExistingUsr
                     .success(function(usr) {
-                        if(usr == 0){
+                        if(usr == '0'){
                             var create = UserService.createUser({"username" : user.username, "password" : user.password});
                             create.success(function(newUser){
                                 $location.url("/user/" + newUser._id);
@@ -57,10 +57,16 @@
 
     function ProfileController($routeParams, UserService) {
         var vm = this;
-        var userId = parseInt($routeParams.uid);
+        var userId = $routeParams.uid;
         UserService.findUserById(userId)
             .success(function(user){
                     vm.user = user;
             });
+        
+        vm.updateUser = updateUser;
+        
+        function updateUser(user) {
+            UserService.updateUser(user);
+        }
     }
 })();
