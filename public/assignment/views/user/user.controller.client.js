@@ -11,25 +11,39 @@
     function LoginController($location, UserService) {
         var vm = this;
         vm.login = login;
+        vm.logout = logout;
+
+        function logout(){
+            UserService
+                .logout()
+                .then(function (response) {
+                    $rootScope.currentUser = null;
+                    $location.url("/");
+                });
+        }
 
         function login(user) {
-            var promise = UserService.findUserByCredentials(user.username, user.password);
-            promise
-                .success(function(user){
+            UserService
+                .login(user)
+                .success(function (user) {
+                    vm.user = user;
+                    $location.url("/user/" + user._id);
+                })
+                /*.success(function(user){
                     if(user == '0') {
                         vm.error = "No such user";
                     } else {
                         vm.user = user;
                         $location.url("/user/" + user._id);
                     }
-                })
+                })*/
                 .error(function(err){
-                    console.log(err);
+                    vm.error = err;
                 });
         }
     }
 
-    function RegisterController($location, UserService) {
+    function RegisterController($location, UserService, $rootScope) {
         var vm = this;
         vm.register = register;
 
@@ -37,36 +51,34 @@
             if(user.password != user.password2)
                 vm.error("passwords don't match");
             else{
-                var ExistingUsr = UserService.findUserByCredentials(user.username, user.password);
-                ExistingUsr
-                    .success(function(usr) {
-                        if(usr == '0'){
-                            var create = UserService.createUser({"username" : user.username, "password" : user.password});
-                            create.success(function(newUser){
-                                $location.url("/user/" + newUser._id);
-                            });
-                        }else
-                            vm.error = "user already exists";
-                    })
-                    .error(function(err) {
-                        console.log(err);
+                UserService
+                    .register(user)
+                    .then(function(response) {
+                        var user = response.data;
+                        $rootScope.currentUser = user;
+                        $location.url("/user/"+user._id);
                     });
             }
         }
     }
 
-    function ProfileController($routeParams, UserService) {
+    function ProfileController($location, $routeParams, UserService, $rootScope) {
         var vm = this;
         var userId = $routeParams.uid;
-        UserService.findUserById(userId)
-            .success(function(user){
-                    vm.user = user;
-            });
-        
         vm.updateUser = updateUser;
-        
+
+        if ($location.url() == "/user"){
+            vm.user = $rootScope.currentUser;
+        }else{
+            UserService.findUserById(userId)
+                .success(function (user) {
+                    vm.user = user;
+                });
+        }
+
         function updateUser(user) {
             UserService.updateUser(user);
+            $location.url("/user/" + user._id + "/website");
         }
     }
 })();

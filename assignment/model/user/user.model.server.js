@@ -11,12 +11,15 @@ module.exports = function () {
         createUser: createUser,
         findUserById: findUserById,
         findUserByCredentials: findUserByCredentials,
+        findUserByUsername: findUserByUsername,
         findWebsitesForUser: findWebsitesForUser,
+        findUserByFacebookId: findUserByFacebookId,
         updateUser: updateUser,
         deleteUser: deleteUser,
         setModel: setModel
     };
     return api;
+
     function setModel(_model) {
         model = _model;
     }
@@ -28,6 +31,10 @@ module.exports = function () {
             .exec();
     }
 
+    function findUserByFacebookId(facebookId) {
+        return UserModel.findOne({'facebook.id': facebookId});
+    }
+
     function deleteUser(userId) {
         return UserModel
             .remove({_id: userId});
@@ -37,6 +44,12 @@ module.exports = function () {
         return UserModel.findOne({
             username: username,
             password: password
+        });
+    }
+
+    function findUserByUsername(username) {
+        return UserModel.findOne({
+            username: username
         });
     }
 
