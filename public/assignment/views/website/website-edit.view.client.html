@@ -44,12 +44,18 @@
 		<div class="col-sm-8">
 			<form>
 				<div class="form-group">
+					<div ng-show="model.WErr" class="alert alert-danger" role="alert">
+						{{model.WErr}}
+					</div>
 					<label for="WebsiteName">Website Name</label>
 					<input type="text"
 						   ng-model="model.website.name"
 						   class="form-control"
 						   id="WebsiteName"
 						   placeholder="Website Name">
+					<div ng-show="model.wbErr" class="alert alert-danger" role="alert">
+						{{model.wbErr}}
+					</div>
 				</div>
 				 <div class="form-group">
 					<label for="Website-description">Website Description</label>

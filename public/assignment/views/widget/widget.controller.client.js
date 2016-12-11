@@ -59,7 +59,7 @@
 
     }
 
-    function NewWidgetController($routeParams, WidgetService, $location) {
+    function NewWidgetController($routeParams, WidgetService, $location, $scope, $document) {
         var vm = this;
         var userId = $routeParams.uid;
         var websiteId = $routeParams.wid;
@@ -69,6 +69,7 @@
         vm.pageId = pageId;
         vm.goToWidget = goToWidget;
         vm.type = $routeParams.type;
+        $scope.submit = submit;
 
         function init() {
             WidgetService.findWidgetsByPageId(pageId)
@@ -83,24 +84,47 @@
 
         vm.createWidget = createWidget;
         function createWidget(widget){
-            widget.type = vm.type.toUpperCase();
-            WidgetService.createWidget(pageId, widget)
-                .success(function(widget){
-                    init();
-                    $location.url("/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget");
-                })
-                .error(function(err){
-                    console.log(err);
-                });
+            if(!widget || !widget.name){
+                vm.wgErr = "Widget name cannot be empty";
+                vm.WGErr = "Invalid field(s)";
+                $scope.name = {"border": "1px solid #d9534f"};
+            }else {
+                vm.WGErr = "";
+                vm.wgErr = "";
+                $scope.name = {};
+                widget.type = vm.type.toUpperCase();
+                WidgetService.createWidget(pageId, widget)
+                    .success(function (widget) {
+                        init();
+                        $location.url("/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget");
+                    })
+                    .error(function (err) {
+                        console.log(err);
+                    });
+            }
         }
 
         function goToWidget(type) {
             vm.type = type;
             $location.url("/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/new/" + type);
         }
+
+        function submit() {
+            var form = angular.element($document[0].querySelector('#myForm'));
+                if(!form[0].name.value){
+                vm.wgErr = "Widget name cannot be empty";
+                vm.WGErr = "Invalid field(s)";
+                $scope.name = {"border": "1px solid #d9534f"};
+            }else {
+                vm.WGErr = "";
+                vm.wgErr = "";
+                $scope.name = {};
+                form[0].submit();
+            }
+        }
     }
 
-    function EditWidgetController($location, $routeParams, WidgetService) {
+    function EditWidgetController($location, $routeParams, WidgetService, $scope, $document) {
         var vm = this;
         var userId = $routeParams.uid;
         var websiteId = $routeParams.wid;
@@ -111,6 +135,7 @@
         vm.pageId = pageId;
         vm.widget = {};
         vm.widget.type = "IMAGE";
+        vm.submit = submit;
 
         function init() {
             WidgetService.findWidgetById(widgetId)
@@ -126,14 +151,23 @@
         vm.deleteWidget = deleteWidget;
 
         function updateWidget(widget){
-            WidgetService.updateWidget(widget)
-                .success(function(widget){
-                    init();
-                    $location.url("/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget");
-                })
-                .error(function(msg){
-                    console.log("Error updating");
-                });
+            if(!widget || !widget.name){
+                vm.wgErr = "Widget name cannot be empty";
+                vm.WGErr = "Invalid field(s)";
+                $scope.name = {"border": "1px solid #d9534f"};
+            }else {
+                vm.WGErr = "";
+                vm.wgErr = "";
+                $scope.name = {};
+                WidgetService.updateWidget(widget)
+                    .success(function (widget) {
+                        init();
+                        $location.url("/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget");
+                    })
+                    .error(function (msg) {
+                        console.log("Error updating");
+                    });
+            }
         }
 
         function deleteWidget(widget){
@@ -145,6 +179,20 @@
                 .error(function(msg){
                     console.log("Error deleting");
                 });
+        }
+
+        function submit() {
+            var form = angular.element($document[0].querySelector('#myForm'));
+            if(!form[0].name.value){
+                vm.wgErr = "Widget name cannot be empty";
+                vm.WGErr = "Invalid field(s)";
+                $scope.name = {"border": "1px solid #d9534f"};
+            }else {
+                vm.WGErr = "";
+                vm.wgErr = "";
+                $scope.name = {};
+                form[0].submit();
+            }
         }
     }
 })();

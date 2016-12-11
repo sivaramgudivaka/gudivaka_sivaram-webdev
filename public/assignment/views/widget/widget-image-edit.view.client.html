@@ -15,14 +15,23 @@
 <div class="row container-fluid">
 <br>
 	<div class="col-sm-12">
-		<form>
+		<form method="post" enctype="multipart/form-data" action="/api/upload" name="myForm" id="myForm">
 			<div class="form-group">
+				<div ng-show="model.WGErr" class="alert alert-danger" role="alert">
+					{{model.WGErr}}
+				</div>
 				<label for="Name">Name</label>
 				<input type="text"
+					   name="name"
+					   ng-style = "name"
 					   ng-model="model.widget.name"
 					   class="form-control"
 					   id="name"
-					   placeholder="Name">
+					   value="{{model.widget.name}}"
+					   placeholder="Name"/>
+				<div ng-show="model.wgErr" class="alert alert-danger" role="alert">
+					{{model.wgErr}}
+				</div>
 			</div>
 			<div class="form-group">
 				<label for="Text">Text</label>

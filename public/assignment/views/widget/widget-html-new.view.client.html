@@ -4,7 +4,7 @@
 			<a class="navbar-text pull-left" href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget">
 				<span class="glyphicon glyphicon-chevron-left white"></span>
 			</a>
-			<a class="navbar-brand">Widget Edit</a>
+			<a class="navbar-brand">New Widget</a>
 			<a class="navbar-text pull-right" ng-click="model.createWidget(model.widget)">
 				<span class="glyphicon glyphicon-ok white"></span>
 			</a>
@@ -17,12 +17,19 @@
 	<div class="col-sm-12">
 		<form>
 			<div class="form-group">
+				<div ng-show="model.WGErr" class="alert alert-danger" role="alert">
+					{{model.WGErr}}
+				</div>
 				<label for="Name">Name</label>
 				<input type="text"
+					   ng-style = "name"
 					   ng-model="model.widget.name"
 					   class="form-control"
 					   id="name"
-					   placeholder="Name">
+					   placeholder="Name"/>
+				<div ng-show="model.wgErr" class="alert alert-danger" role="alert">
+					{{model.wgErr}}
+				</div>
 			</div>
 			<div class="form-group">
 				<label for="Text">Text</label>

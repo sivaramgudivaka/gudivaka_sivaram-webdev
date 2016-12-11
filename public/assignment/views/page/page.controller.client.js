@@ -27,7 +27,7 @@
         init();
     }
 
-    function NewPageController($location, $routeParams, PageService) {
+    function NewPageController($location, $routeParams, PageService, $scope) {
         var vm = this;
         vm.newPage = newPage;
         var userId = $routeParams.uid;
@@ -47,18 +47,27 @@
         init();
 
         function newPage(page) {
-            PageService.createPage(websiteId, page)
-                .success(function(page){
-                    init();
-                    $location.url("/user/" + userId + "/website/" + websiteId + "/page");
-                })
-                .error(function(msg){
-                    console.log(msg);
-                });
+            if(!page || !page.name){
+                vm.pgErr = "Page name cannot be empty";
+                vm.PErr = "Invalid field(s)";
+                $scope.name = {"border": "1px solid #d9534f"};
+            }else {
+                vm.PErr = "";
+                vm.pgErr = "";
+                $scope.name = {};
+                PageService.createPage(websiteId, page)
+                    .success(function (page) {
+                        init();
+                        $location.url("/user/" + userId + "/website/" + websiteId + "/page");
+                    })
+                    .error(function (msg) {
+                        console.log(msg);
+                    });
+            }
         }
     }
 
-    function EditPageController($routeParams, $location, PageService) {
+    function EditPageController($routeParams, $location, PageService, $scope) {
         var vm = this;
         var userId = $routeParams.uid;
         var websiteId = $routeParams.wid;
@@ -85,14 +94,23 @@
         init();
 
         function updatePage(page) {
-            PageService.updatePage(page)
-                .success(function(page){
-                    init();
-                    $location.url("/user/" + userId + "/website/" + websiteId + "/page");
-                })
-                .error(function(msg){
-                    console.log("Error updating");
-                });
+            if(!page || !page.name){
+                vm.pgErr = "Page name cannot be empty";
+                vm.PErr = "Invalid field(s)";
+                $scope.name = {"border": "1px solid #d9534f"};
+            }else {
+                vm.PErr = "";
+                vm.pgErr = "";
+                $scope.name = {};
+                PageService.updatePage(page)
+                    .success(function (page) {
+                        init();
+                        $location.url("/user/" + userId + "/website/" + websiteId + "/page");
+                    })
+                    .error(function (msg) {
+                        console.log("Error updating");
+                    });
+            }
         }
 
         function deletePage(page){
