@@ -11,16 +11,6 @@
     function LoginController($location, UserService, $scope) {
         var vm = this;
         vm.login = login;
-        vm.logout = logout;
-
-        function logout(){
-            UserService
-                .logout()
-                .then(function (response) {
-                    $rootScope.currentUser = null;
-                    $location.url("/");
-                });
-        }
 
         function login(user) {
             if(!user){
@@ -115,6 +105,16 @@
         var vm = this;
         var userId = $routeParams.uid;
         vm.updateUser = updateUser;
+		vm.logout = logout;
+
+        function logout(){
+            UserService
+                .logout()
+                .then(function (response) {
+                    $rootScope.currentUser = null;
+                    $location.url("/");
+                });
+        }
 
         if ($location.url() == "/user"){
             vm.user = $rootScope.currentUser;
